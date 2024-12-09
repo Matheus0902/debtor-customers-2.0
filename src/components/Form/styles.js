@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.form`
-  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 1rem;
 `
 
 export const InputWraper = styled.div`
@@ -19,7 +20,8 @@ export const InputWraper = styled.div`
 `
 
 export const BoxButton = styled.div`
-  margin: 0 auto;
+  width: 100%;
+  margin: 3rem auto;
 `
 
 

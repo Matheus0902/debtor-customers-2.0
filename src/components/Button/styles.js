@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.button`
-    width: 30rem;
+    width: 100%;
     height: 5rem;
-    font-size: 1.8rem;
-    font-weight: bold;
+    font-size: 1.6rem;
+    font-weight: 500;
     margin-top: 0 auto;
     letter-spacing: .1rem;
     color: ${({ theme }) => theme.COLORS.WHITE};

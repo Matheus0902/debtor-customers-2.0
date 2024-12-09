@@ -18,11 +18,18 @@ export const Container = styled.div`
 export const ClientsSearch = styled.div`
 
   grid: main;
-  padding: 5rem 2rem;
+  padding: 0rem 2rem;
+
+  > button {
+    font-size: 2rem;
+    color: ${({ theme }) => theme.COLORS. BACKGROUND_900};
+    margin-bottom: 10rem;
+  }
 
   ul {
     padding: 3rem 1rem;
   }
+
 `
 
 

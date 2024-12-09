@@ -1,24 +1,29 @@
-import { Container, Menu } from "./styles"
+import { MdGroups , MdGroupAdd, MdOutlineSaveAlt  } from "react-icons/md";
+import { Container, Menu, LinkButton } from "./styles"
 import { Header } from "../../components/Header"
-import { LinkButton } from "../../components/LinkButton"
 
 export function Home() {
+
   return (
     <Container>
       <Header />
       <Menu>
-        <LinkButton 
-          icon='../../../public/clients.svg'
-          title='Clientes'
-        />
-        <LinkButton 
-          icon='../../../public/new-client.svg'
-          title='Novo cliente'
-        />
-        <LinkButton 
-          icon='../../../public/new-entry.svg'
-          title='Novo Registro'
-        />
+        <LinkButton to='/ClientsList'>
+          <MdGroups />
+          Clientes
+          
+        </LinkButton>
+
+        <LinkButton to='/NewClient'>
+          <MdGroupAdd />
+          Novo cliente
+        </LinkButton>
+
+        <LinkButton to='/NewEntry'>
+          <MdOutlineSaveAlt />
+          Novo Registro
+        </LinkButton>
+
       </Menu>
     </Container>
   )

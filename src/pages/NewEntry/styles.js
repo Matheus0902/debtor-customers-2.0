@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
 
-  background-color: ${({ theme }) => theme.COLORS. BACKGROUND_MAIN};
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_MAIN};
 
   display: grid;
   grid-template-columns: 100vw;
@@ -13,6 +13,11 @@ export const Container = styled.div`
   "header"
   "main";
 
+  > svg {
+    margin: 0 6rem;
+    font-size: 2rem;
+  }
+
 `
 
 export const MainEntry = styled.div`
@@ -20,12 +25,22 @@ export const MainEntry = styled.div`
 
   width: 50rem;
   margin: 0 auto;
-  padding: 5rem 2rem;
+  padding: 0rem 2rem;
 
   > h1 {
     text-align: center;
-    color: ${({ theme }) => theme.COLORS. BACKGROUND_900};
+    color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
     margin-bottom: 5rem;
+  }
+
+  button:first-child {
+    font-size: 2rem;
+    color: ${({ theme }) => theme.COLORS. BACKGROUND_900};
+    margin-bottom: 10rem;
+  }
+
+  button:last-child {
+    color: ${({ theme }) => theme.COLORS.ORANGE};
   }
 `
 

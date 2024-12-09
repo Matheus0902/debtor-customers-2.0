@@ -1,10 +1,13 @@
+import { MdAccountBalanceWallet } from "react-icons/md";
 import { Container } from "./styles"
+
 
 export function Header() {
   return (
     <Container>
       <a href="#">
-        <img src="../../../public/logo-debitor.png" alt="logo do debtor customers" />
+        <h1><span>Debtor</span><span>Customers</span></h1>
+        <MdAccountBalanceWallet />
       </a>
     </Container>
   )

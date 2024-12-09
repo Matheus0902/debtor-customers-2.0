@@ -1,10 +1,10 @@
 import { Container } from './styles'
 
-export function Button ({ type, title, ...rest }) {
+export function ButtonText ({ title, ...rest }) {
   return (
     <Container 
-    type={type}
-    {...rest}
+      type="button"
+      {...rest}
     >
       {title}
     </Container>

@@ -6,15 +6,17 @@ export const Container = styled.li `
   color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
   font-weight: 500;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
   border-bottom: .5px solid #4f4f4f3e;
 
   > a {
     width: 2rem;
-    background-image: url('public/arrow.svg');
-    background-repeat: no-repeat;
-    background-size: 2rem;
-    background-position: cover;
+    color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+
+    svg {
+      font-size: 2rem;
+    }
   }
 `
