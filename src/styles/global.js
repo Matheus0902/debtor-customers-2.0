@@ -12,6 +12,7 @@ export default createGlobalStyle`
     }
 
     body {
+        height: 100vh;
         -webkit-font-smoothing: antialiased;
         font-size: 1.6rem;
     }

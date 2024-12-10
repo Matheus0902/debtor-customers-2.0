@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.form`
   max-width: 60rem;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -1,4 +1,4 @@
-import { Container, MainEntry } from "./styles"
+import { Container, MainEntry, ToBack } from "./styles"
 import { Header } from "../../components/Header"
 import { Form } from "../../components/Form"
 import { ButtonText } from "../../components/ButtonText"
@@ -17,11 +17,13 @@ export function NewEntry() {
   return (
     <Container>
       <Header />
-      <MainEntry>
+      <ToBack>
         <ButtonText
           title={<FaArrowLeft />}
           onClick={handleBack}
         />
+      </ToBack>
+      <MainEntry>
         <h1>Nova entrada</h1>
         <Form 
           inputOne='Nome'

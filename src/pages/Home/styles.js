@@ -20,7 +20,7 @@ export const Menu = styled.nav`
   align-items: center;
   gap: 3rem;
   flex-direction: column;
-  margin-top: 15rem;
+  justify-content: center;
 
   svg {
     font-size: 3rem

@@ -1,4 +1,4 @@
-import { Container, ClientsSearch } from "./styles"
+import { Container, ClientsSearch, ToBack } from "./styles"
 import { Header } from "../../components/Header"
 import { ButtonText } from "../../components/ButtonText"
 import { Input } from "../../components/Input"
@@ -20,11 +20,14 @@ export function ClientsList() {
     <Container>
       <Header />
 
+      <ToBack>
+        <ButtonText
+          title={<FaArrowLeft />}
+          onClick={handleBack}
+        />
+      </ToBack>
+
       <ClientsSearch>
-      <ButtonText 
-        title={<FaArrowLeft />}
-        onClick={handleBack}
-      /> 
       
       <Input placeholder="Buscar clientes"/>
       <ul>
