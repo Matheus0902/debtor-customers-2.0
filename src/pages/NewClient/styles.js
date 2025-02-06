@@ -51,5 +51,11 @@ export const MainClient = styled.div`
   }
 `
 
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem
+`
+
 
 

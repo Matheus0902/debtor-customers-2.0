@@ -1,9 +1,11 @@
 import { Container } from './styles'
 
-export function Input ({ id, type, placeholder }) {
+export function Input ({ icon: Icon, onClick, ...rest}) {
   return (
     <Container>
-      <input type={type} id={id} placeholder={placeholder}/>
+      <input {...rest}
+      />
+      {Icon && <Icon size={20} onClick={onClick} />}
     </Container>
   )
 }

@@ -8,9 +8,10 @@ export const Container = styled.div`
 
   display: grid;
   grid-template-columns: 100vw;
-  grid-template-rows: 16rem auto 10rem;
+  grid-template-rows: 16rem 2rem auto 10rem;
   grid-template-areas: 
   "header"
+  "toBack"
   "TableDebts"
   "BoxButtons";
 
@@ -56,6 +57,18 @@ export const TableDebts = styled.div`
     }
   }
 
+`
+
+export const ToBack = styled.div`
+
+  grid: ToBack;
+  padding: 0 5rem;
+  
+  button {
+    font-size: 2rem;
+    color: ${({ theme }) => theme.COLORS. BACKGROUND_900};
+    margin-bottom: 10rem;
+  }
 `
 
 export const BoxButtons = styled.div`

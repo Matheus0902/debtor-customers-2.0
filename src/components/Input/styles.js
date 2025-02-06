@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
+    display: flex;
+    align-items: center;
+    color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+    background-color: ${({ theme }) => theme.COLORS.WHITE};
+    border-radius: 1rem;
     
     > input {
         width: 100%;
@@ -10,10 +15,8 @@ export const Container = styled.div`
         outline: none;
         font-size: 1.6rem;
         font-weight: 500;
-        color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
         padding: 2rem;
-        background-color: ${({ theme }) => theme.COLORS.WHITE};
-        border-radius: 1rem;
+        background-color: transparent;
         border: 0;
 
         &::placeholder {
@@ -21,6 +24,11 @@ export const Container = styled.div`
             opacity: .4;
         }
 
+    }
+
+    > svg {
+        margin-right: 1rem;
+        background-color: transparent;
     }
 
 `

@@ -50,4 +50,33 @@ export const MainEntry = styled.div`
   }
 `
 
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  > div:nth-child(3) {
+    margin-top: 1rem
+  }
+
+  > div:nth-child(4) {
+    margin-top: 3rem;
+  }
+
+  > button {
+    margin-top: 3rem
+  }
+`
+
+export const BoxSuggestions = styled.div`
+  height: 2rem;
+  padding: 0 2rem;
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+`
+
+export const Suggestion = styled.p`
+  z-index: 999;
+  cursor: pointer;
+`
 

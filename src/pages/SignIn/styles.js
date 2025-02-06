@@ -36,7 +36,8 @@ export const Form = styled.form`
     margin-top: 1rem;
   }
 
-  > Button:last-child {
+  > a {
+    color: ${({ theme }) => theme.COLORS.WHITE};
     margin-top: 8rem;
   }
 
