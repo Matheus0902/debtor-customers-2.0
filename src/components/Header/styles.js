@@ -7,8 +7,10 @@ export const Container = styled.header `
   height: 10rem;
   padding: 0 3rem;
   background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+  
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   > a {
     display: flex;
@@ -32,4 +34,17 @@ export const Container = styled.header `
       color: ${({ theme }) => theme.COLORS.WHITE};
     }
   }  
+`
+export const Logout = styled.button`
+  width: 3rem;
+  height: 3rem;
+  background: none;
+  border: none;
+
+  > svg {
+    width: 3rem;
+    height: 3rem;
+    color: ${({ theme }) => theme.COLORS.ORANGE};
+  }
+
 `
