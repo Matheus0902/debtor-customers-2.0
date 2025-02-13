@@ -1,4 +1,4 @@
-import { Container, MainEntry, ToBack, Form, BoxSuggestions, Suggestion } from "./styles"
+import { Container, MainEntry, ToBack, Form, BoxSuggestions, Suggestion, BoxButtons } from "./styles"
 import { Header } from "../../components/Header"
 import { Input } from "../../components/Input"
 import { ButtonText } from "../../components/ButtonText"
@@ -18,9 +18,12 @@ export function NewEntry() {
   const [clientSearch, setClientSearch] = useState([])
 
   const [clientName, setClientName] = useState('')
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState('Pagamento')
   const [total, setTotal] = useState('')
   const [searchSuggestion, setSearchSuggestion] = useState(true)
+  const [register, setRegister] = useState('toReceive')
+  const [toggleButton, setToggleButton] = useState('Pagamento')
+  const isPayment = register != 'toReceived'
 
   const navigate = useNavigate()
 
@@ -29,35 +32,40 @@ export function NewEntry() {
   }
 
   async function handleNewEntry() {
-
-    if(!clientName) {
-      return alert("Digite o nome do cliente")
+    if (!clientName) {
+      return alert("Digite o nome do cliente");
     }
-    if(!description) {
-      return alert("Digite a descrição da entrada")
+    if (!description) {
+      return alert("Digite a descrição da entrada");
     }
 
-    const value = parseFloat(total)
+    let value = parseFloat(total);
 
-    if(!total || isNaN(value) || value <=0) {
-      return alert("Digite um valor válido para o total da entrada")
+    if (!total || isNaN(value) || value <= 0) {
+      return alert("Digite um valor válido para o total da entrada");
+    } else if (isPayment) {
+      value = value * -1;
     }
-    
-    const lowerClientName = clientName.toLowerCase()
+
+    const lowerClientName = clientName.toLowerCase();
 
     try {
       await api.post('new-entries', {
-        client_name: lowerClientName, 
-        description: description, 
-        total_value: value
-      })
-      
-      alert('Entrada registrada com sucesso!')
-      handleBack()
+        client_name: lowerClientName,
+        description: description,
+        total_value: value,
+      });
 
+      alert('Entrada registrada com sucesso!');
+      handleBack();
+      console.log(value);
     } catch (error) {
-      console.error('Erro ao registar entrada:', error)
-      alert("Não foi possível registrar a entrada")
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        console.error('Erro ao registrar entrada:', error);
+        alert("Não foi possível registrar a entrada");
+      }
     }
   }
 
@@ -81,22 +89,18 @@ export function NewEntry() {
 
   }, [clientName])
 
-  const handleValueChange = (e) => {
-    const value = e.target.value
 
-    let formattedValue = value.replace(/\D/g, '')
+  function handleToggleRegister() {
 
-    if (formattedValue.length <= 2) {
-      formattedValue = `(${formattedValue}`;
-    } else if (formattedValue.length <= 5) {
-      formattedValue = `(${formattedValue.slice(0, 2)}) ${formattedValue.slice(2)}`;
-    } else if (formattedValue.length <= 10) {
-      formattedValue = `(${formattedValue.slice(0, 2)}) ${formattedValue.slice(2, 7)}-${formattedValue.slice(7)}`;
+    if(!isPayment) {
+      setRegister('received')
+      setToggleButton('Pagamento')
+      setDescription('Pagamento')
     } else {
-      formattedValue = `(${formattedValue.slice(0, 2)}) ${formattedValue.slice(2, 7)}-${formattedValue.slice(7, 11)}`;
+      setRegister('toReceived')
+      setToggleButton('Dívida')
+      setDescription('')
     }
-
-    setValue(formattedValue);
   }
   
 
@@ -154,6 +158,8 @@ export function NewEntry() {
 
           <Input 
             placeholder='Descrição da entrada'
+            value={description}
+            readOnly={isPayment}
             onChange={e => setDescription(e.target.value)}
             type='text'
           />
@@ -170,10 +176,17 @@ export function NewEntry() {
             type='text'
           />
 
-          <Button
-            title='Registrar entrada'
-            onClick={handleNewEntry}
-          />
+          <BoxButtons>
+            <Button
+              title='Alterar'
+              onClick={handleToggleRegister}
+            />
+
+            <Button
+              title={`Registar `+ toggleButton}
+              onClick={handleNewEntry}
+            />
+          </BoxButtons>
 
         </Form>
       </MainEntry>

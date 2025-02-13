@@ -79,4 +79,13 @@ export const Suggestion = styled.p`
   z-index: 999;
   cursor: pointer;
 `
+ 
+export const BoxButtons = styled.div`
+  margin-top: 3rem;
+  padding: 0 2rem;
+
+  display: flex;
+  gap: 3rem;
+
+`
 
