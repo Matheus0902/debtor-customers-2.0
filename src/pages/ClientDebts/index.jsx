@@ -1,4 +1,4 @@
-import { Container, TableDebts, BoxButtons, ToBack } from "./styles"
+import { Container, TableDebts, BoxButtons, ToBack, TableWrapper, SimulatedHeader } from "./styles"
 import { Header } from "../../components/Header"
 import { ButtonText } from "../../components/ButtonText"
 import { DebtRow } from "../../components/DebtRow"
@@ -10,6 +10,23 @@ import { FaArrowLeft } from "react-icons/fa6";
 
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+
+import generatePDF, { Margin } from 'react-to-pdf';
+
+const personalization = {
+    // default is `save`
+  method: 'save',
+  page: {
+    // margin is in MM, default is Margin.NONE = 0
+    margin: Margin.MEDIUM,
+    // default is 'A4'
+    format: 'A4',
+    // default is 'portrait'
+    orientation: 'landscape'
+  }
+}
+
+const recoverContentToPdf = () => document.getElementById('content')
 
 export function ClientDebts() {
 
@@ -88,50 +105,57 @@ export function ClientDebts() {
   return (
     <Container>
       <Header />
+
       <ToBack>
         <ButtonText
           title={<FaArrowLeft />}
           onClick={handleBack}
         />
       </ToBack>
+      
       <TableDebts>
         {client ? (
           <>
             <h1>{client.name.toUpperCase()}</h1>
 
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Data</th>
-                  <th scope="col">Itens</th>
-                  <th scope="col">Valor total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  clientDebts.map((clientDebt, index) => (
-                    <DebtRow 
-                      key={clientDebt.id || index}
-                      date={formatDate(clientDebt.created_at)}
-                      description={clientDebt.description}
-                      total={formatCurrency(clientDebt.total_value)}
-                    />
-                  ))
-                }
+            <TableWrapper>
+              <table id="content">
+                <thead>
+                  <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Itens</th>
+                    <th scope="col">Valor total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    clientDebts.map((clientDebt, index) => (
+                      <DebtRow 
+                        key={clientDebt.id || index}
+                        date={formatDate(clientDebt.created_at)}
+                        description={clientDebt.description}
+                        total={formatCurrency(clientDebt.total_value)}
+                      />
+                    ))
+                  }
 
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="row" colSpan="2">Saldo Atual</th>
-                  <td>
-                    {formatCurrency(clientDebtsTotalValue)}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row" colSpan="2">Saldo Atual</th>
+                    <td>
+                      {formatCurrency(clientDebtsTotalValue)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </TableWrapper>
 
             <BoxButtons>
-              <Button title='Download'/>
+              <Button 
+                title='Gerar pdf'
+                onClick={() => generatePDF(recoverContentToPdf, personalization)}  
+              />
               <Button 
                 title='Nova entrada'
                 onClick={ToNewEntry}

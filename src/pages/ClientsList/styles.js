@@ -8,7 +8,7 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.COLORS. BACKGROUND_MAIN};
 
   display: grid;
-  grid-template-columns: 100vw;
+  grid-template-columns: 100%;
   grid-template-rows: 16rem 2rem auto;
   grid-template-areas: 
   "header"
@@ -18,7 +18,8 @@ export const Container = styled.div`
 `
 export const ToBack = styled.div`
 
-  grid: ToBack;
+  width: 100%;
+  grid-area: ToBack;
   padding: 0 5rem;
   
   button {
@@ -30,11 +31,21 @@ export const ToBack = styled.div`
 
 export const ClientsSearch = styled.div`
 
-  grid: main;
+  grid-area: main;
 
   width: 80rem;
   padding: 10rem 2rem;
   margin: 0 auto;
+
+  > ul {
+    max-height: 30rem;
+    overflow-y: auto;
+   
+    &::-webkit-scrollbar {
+    display: none;
+    }
+  }
+
 
   > button {
     font-size: 2rem;

@@ -22,21 +22,20 @@ export const Container = styled.div`
 `
 export const ToBack = styled.div`
 
-  grid: ToBack;
+  grid-area: ToBack;
   padding: 0 5rem;
   
   button {
     font-size: 2rem;
     color: ${({ theme }) => theme.COLORS. BACKGROUND_900};
-    margin-bottom: 10rem;
   }
 `
 
 export const MainEntry = styled.div`
-  grid: main;
+  grid-area: main;
 
   width: 50rem;
-  margin: 0 auto;
+  margin: 10rem auto;
   padding: 0rem 2rem;
 
   > h1 {

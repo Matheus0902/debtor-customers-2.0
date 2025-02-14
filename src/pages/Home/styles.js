@@ -14,7 +14,7 @@ export const Container = styled.div`
 `
 
 export const Menu = styled.nav`
-  grid: menu;
+  grid-area: menu;
   
   display: flex;
   align-items: center;

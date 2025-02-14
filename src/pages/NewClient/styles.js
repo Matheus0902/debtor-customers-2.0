@@ -8,7 +8,7 @@ export const Container = styled.div`
 
   display: grid;
   grid-template-columns: 100vw;
-  grid-template-rows: 16rem 2rem auto;
+  grid-template-rows: 16rem 3rem auto;
   grid-template-areas: 
   "header"
   "ToBack"
@@ -17,21 +17,20 @@ export const Container = styled.div`
 `
 export const ToBack = styled.div`
 
-  grid: ToBack;
+  grid-area: ToBack;
   padding: 0 5rem;
   
   button {
     font-size: 2rem;
     color: ${({ theme }) => theme.COLORS. BACKGROUND_900};
-    margin-bottom: 10rem;
   }
 `
 
 export const MainClient = styled.div`
-  grid: main;
+  grid-area: main;
 
   width: 50rem;
-  margin: 0 auto;
+  margin: 10rem auto;
   padding: 0 2rem;
 
   > h1 {
