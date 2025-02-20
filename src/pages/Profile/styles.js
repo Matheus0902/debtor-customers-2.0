@@ -4,7 +4,13 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
   background:  ${({ theme }) => theme.COLORS.BACKGROUND_900};
-  text-align: center;
+
+  display: grid;
+  grid-template-columns: 100vw;
+  grid-template-rows: 5rem auto;
+  grid-template-areas: 
+  "ToBack"
+  "main";
   
   > header {
     width: 100%;
@@ -28,6 +34,9 @@ export const Container = styled.div`
 `
 
 export const Form = styled.form`
+
+  grid-area: main;
+
   max-width: 30rem;
   margin: 10rem auto;
   display: flex;
@@ -49,6 +58,7 @@ export const Form = styled.form`
     margin-top: 1rem;
     color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
     background: ${({ theme }) => theme.COLORS.ORANGE};
+    font-weight: 600;
   }
 
 `
@@ -57,4 +67,14 @@ export const InputWraper = styled.div`
   width: 100%;
 `
 
+export const ToBack = styled.div`
+
+  grid-area: ToBack;
+  padding: 10rem;
+  
+  button {
+    font-size: 2rem;
+    color: ${({ theme }) => theme.COLORS.ORANGE};
+  }
+`
 

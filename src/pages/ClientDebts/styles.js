@@ -46,13 +46,6 @@ export const TableWrapper = styled.div`
     text-align: center;
     border-collapse: collapse;
     border: 2px solid  ${({ theme }) => theme.COLORS.BACKGROUND_900};
-
-    /*thead {
-      position: sticky;
-      top: 0;
-      background-color: ${({ theme }) => theme.COLORS.WHITE}; 
-      z-index: 1;
-    }*/
     
     thead th {
       padding: 1rem;
@@ -71,18 +64,11 @@ export const TableWrapper = styled.div`
       border-bottom: 2px solid ${({ theme }) => theme.COLORS.BACKGROUND_900};
     }
 
-    /*tfoot {
-      position: sticky;
-      bottom: 0;
-      background-color: ${({ theme }) => theme.COLORS.WHITE};
-      border: 2px solid ${({ theme }) => theme.COLORS.BACKGROUND_900};
-      z-index: 1;
-    }*/
-    
     tfoot tr td {
       font-weight: bold;
       padding: 1rem;
     }
+
   }
 `
 
@@ -106,17 +92,39 @@ export const ToBack = styled.div`
   }
 `
 
-export const BoxButtons = styled.div`
+export const BoxOrganizer = styled.div`
   grid-area: BoxButtons;
 
   display: flex;
+  align-items: center;
+  justify-content: space-around;
   gap: 2rem;
   margin: 5rem 0;
+
+  > div {
+    width: 20rem;
+
+  }
+
+  > button:nth-child(3),
+    button:nth-child(4),
+    button:nth-child(5) {
+      width: 15rem;
+      color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+      background-color: ${({ theme }) => theme.COLORS.GRAY_200};
+      font-weight: bold;
+  }
   
   > button {
-    width: 15rem;
+    width: 20rem;
     height: 3.5rem;
   }
+`
+
+export const Message = styled.p`
+  margin-top: 15rem;
+  font-size: 3rem;
+  color: ${({ theme }) => theme.COLORS.GREEN};
 `
 
 

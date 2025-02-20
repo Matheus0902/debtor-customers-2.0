@@ -54,11 +54,11 @@ export function NewEntry() {
         client_name: lowerClientName,
         description: description,
         total_value: value,
-      });
+      })
 
       alert('Entrada registrada com sucesso!');
-      handleBack();
-      console.log(value);
+      handleBack()
+
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message);

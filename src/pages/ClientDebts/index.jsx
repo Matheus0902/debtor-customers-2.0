@@ -1,8 +1,9 @@
-import { Container, TableDebts, BoxButtons, ToBack, TableWrapper, SimulatedHeader } from "./styles"
+import { Container, TableDebts, BoxOrganizer, ToBack, TableWrapper, Message } from "./styles"
 import { Header } from "../../components/Header"
 import { ButtonText } from "../../components/ButtonText"
 import { DebtRow } from "../../components/DebtRow"
 import { Button } from "../../components/Button"
+import { Input } from "../../components/Input"
 
 import { api } from '../../services/api'
 
@@ -10,6 +11,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+
+import { format } from 'date-fns';
 
 import generatePDF, { Margin } from 'react-to-pdf';
 
@@ -33,10 +36,11 @@ export function ClientDebts() {
   const [client, setClient] = useState(null)
   const [clientDebts, setClientDebts] = useState([])
   const [clientDebtsTotalValue, setClientDebtsTotalValue] = useState(0)
-  
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+
   useEffect(() => {
     const clientName = localStorage.getItem('@debtor-customers:client')
-    console.log(clientName)
     
     if(clientName) {
       fetchClient(clientName)
@@ -56,15 +60,16 @@ export function ClientDebts() {
   async function fetchClient(clientName) {
 
     try {
+
       const responseClient = await api.get(`/clients?name=${clientName}`)
-      
+
       const clientData = responseClient.data[0]
       
       if(clientData) {
         setClient(clientData)
 
-        const responseClientDebts = await api.get(`new-entries?client_id=${clientData.id}`)
-
+        const responseClientDebts = await api.get(`new-entries?client_id=${clientData.id}&startDate=${startDate}&endDate=${endDate}`)
+    
         const clientDebtsData = responseClientDebts.data
 
         let totalValue = 0
@@ -86,6 +91,42 @@ export function ClientDebts() {
       console.error('Erro ao buscar cliente:', error)
     }
     
+  }
+
+  async function deleteClientEntries() {
+    try {
+      await api.delete(`/new-entries?client_id=${client.id}`)
+
+      const clientName = localStorage.getItem('@debtor-customers:client')
+      fetchClient(clientName)
+
+    } catch (error){
+      if(response.error) {
+        alert(response.error.data.message)
+      } else {
+        alert("Não foi possível deletar as entradas")
+      }
+    }
+  }
+
+  function filterEntries() {
+    if(startDate == '' || endDate == '') {
+      return alert("Informe a data inicial e final para filtrar")
+    }
+
+    const clientName = localStorage.getItem('@debtor-customers:client')
+    fetchClient(clientName)
+
+    setStartDate('')
+    setEndDate('')
+  }
+
+  function cleanFilter() {
+    setStartDate('')
+    setEndDate('')
+
+    const clientName = localStorage.getItem('@debtor-customers:client')
+    fetchClient(clientName)
   }
   
   
@@ -116,54 +157,92 @@ export function ClientDebts() {
       <TableDebts>
         {client ? (
           <>
-            <h1>{client.name.toUpperCase()}</h1>
+            <h1>Cliente: {client.name.toUpperCase()}</h1>
 
-            <TableWrapper>
-              <table id="content">
-                <thead>
-                  <tr>
-                    <th scope="col">Data</th>
-                    <th scope="col">Itens</th>
-                    <th scope="col">Valor total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    clientDebts.map((clientDebt, index) => (
-                      <DebtRow 
-                        key={clientDebt.id || index}
-                        date={formatDate(clientDebt.created_at)}
-                        description={clientDebt.description}
-                        total={formatCurrency(clientDebt.total_value)}
+            {
+              (clientDebts.length !== 0) ? (
+                <>
+                  <TableWrapper>
+                    <table id="content">
+                      <thead>
+                        <tr>
+                          <th scope="col">Data</th>
+                          <th scope="col">Itens</th>
+                          <th scope="col">Valor total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          clientDebts.map((clientDebt, index) => (
+                            <DebtRow 
+                              key={clientDebt.id || index}
+                              date={formatDate(clientDebt.created_at)}
+                              description={clientDebt.description}
+                              total={formatCurrency(clientDebt.total_value)}
+                            />
+                          ))
+                        }
+
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th scope="row" colSpan="2">Saldo Atual</th>
+                          <td>
+                            {formatCurrency(clientDebtsTotalValue)}
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+            
+                    <BoxOrganizer>
+                      <Input 
+                        type="date" 
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
                       />
-                    ))
-                  }
 
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th scope="row" colSpan="2">Saldo Atual</th>
-                    <td>
-                      {formatCurrency(clientDebtsTotalValue)}
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-            </TableWrapper>
+                      <Input 
+                        type="date" 
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                      />
+                      
+                      <Button 
+                        title='Filtrar'
+                        onClick={filterEntries} 
+                      />
 
-            <BoxButtons>
-              <Button 
-                title='Gerar pdf'
-                onClick={() => generatePDF(recoverContentToPdf, personalization)}  
-              />
-              <Button 
-                title='Nova entrada'
-                onClick={ToNewEntry}
-              />
-            </BoxButtons>
+                      <Button 
+                        title='Deletar ultima'
+                        onClick={deleteClientEntries} 
+                      />
+
+                      <Button 
+                        title='Limpar filtro'
+                        onClick={cleanFilter} 
+                      />
+                    </BoxOrganizer>
+                  </TableWrapper>
+
+                    </>
+                  ) : (
+                    <Message>Este cliente não possui debtos!</Message>
+                  )
+                }
+
+                <BoxOrganizer>
+                  <Button 
+                    title='Gerar pdf'
+                    onClick={() => generatePDF(recoverContentToPdf, personalization)}  
+                  />
+                  <Button 
+                    title='Nova entrada'
+                    onClick={ToNewEntry}
+                  />
+                </BoxOrganizer>
           </>
         ) : (
-          <p>Cliente não encontrado</p>  // Mensagem se o cliente não for encontrado
+          <Message>Cliente não encontrado</Message>  // Mensagem se o cliente não for encontrado
         )}
       </TableDebts>
     </Container>

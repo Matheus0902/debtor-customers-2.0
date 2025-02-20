@@ -33,13 +33,20 @@ export function ClientsList() {
   }
 
   useEffect(() => {
-    async function  fetchClients() {
-      const response = await api.get(`/clients?name=${search}`)
-      setClients(response.data)
+    if(search.length >= 3) {
+      async function  fetchClients() {
+        const response = await api.get(`/clients?name=${search}`)
+        setClients(response.data)
+      }
+  
+      fetchClients()
     }
-
-    fetchClients()
   }, [search])
+
+  const upperFirstLetter = (str) => {
+    if (!str) return ''; // Se a string for vazia, retorna uma string vazia
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   return (
     <Container>
@@ -64,7 +71,7 @@ export function ClientsList() {
             <ClientShow 
               key={client.id}
             >
-              {client.name}
+              {upperFirstLetter(client.name)}
               <LinkButton to="/ClientDebts">
                 <IoArrowRedoCircleOutline 
                   onClick={(e) => setClientSelected(client.name)}
