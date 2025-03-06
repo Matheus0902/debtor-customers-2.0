@@ -16,6 +16,7 @@ export function ClientsList() {
   const [search, setSearch] = useState('')
   const [clients, setClients] = useState([])
   const [clientSelected, setClientSelected] = useState('')
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate()
 
@@ -25,7 +26,7 @@ export function ClientsList() {
 
   useEffect(() => {
     handleClientSelected()
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientSelected])
 
   function handleBack() {
@@ -33,14 +34,19 @@ export function ClientsList() {
   }
 
   useEffect(() => {
-    if(search.length >= 3) {
-      async function  fetchClients() {
+    const fetchClients = async () => {
+      setError(null)
+      
+      try {
         const response = await api.get(`/clients?name=${search}`)
         setClients(response.data)
-      }
-  
-      fetchClients()
+      } catch (error) {
+        setError("Houve um erro ao buscar os clientes")
+        console.error(error)
+      } 
     }
+
+    fetchClients() 
   }, [search])
 
   const upperFirstLetter = (str) => {
@@ -65,6 +71,7 @@ export function ClientsList() {
         placeholder="Buscar clientes"
         onChange={(e) => setSearch(e.target.value)}
       />
+      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       <ul>
         {
           clients.map( client => (
@@ -74,7 +81,7 @@ export function ClientsList() {
               {upperFirstLetter(client.name)}
               <LinkButton to="/ClientDebts">
                 <IoArrowRedoCircleOutline 
-                  onClick={(e) => setClientSelected(client.name)}
+                  onClick={() => setClientSelected(client.name)}
                 />
               </LinkButton>
             </ClientShow>

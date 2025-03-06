@@ -12,7 +12,6 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
-import { format } from 'date-fns';
 
 import generatePDF, { Margin } from 'react-to-pdf';
 
@@ -38,6 +37,7 @@ export function ClientDebts() {
   const [clientDebtsTotalValue, setClientDebtsTotalValue] = useState(0)
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const clientName = localStorage.getItem('@debtor-customers:client')
@@ -58,6 +58,8 @@ export function ClientDebts() {
   }
   
   async function fetchClient(clientName) {
+    
+    setLoading(true)
 
     try {
 
@@ -89,6 +91,8 @@ export function ClientDebts() {
 
     } catch (error){
       console.error('Erro ao buscar cliente:', error)
+    } finally {
+      setLoading(false)
     }
     
   }
@@ -100,9 +104,10 @@ export function ClientDebts() {
       const clientName = localStorage.getItem('@debtor-customers:client')
       fetchClient(clientName)
 
-    } catch (error){
-      if(response.error) {
-        alert(response.error.data.message)
+    } catch (error) {
+      if (error.response && error.response.data) {
+        alert(error.response.data.message)
+
       } else {
         alert("Não foi possível deletar as entradas")
       }
@@ -153,9 +158,11 @@ export function ClientDebts() {
           onClick={handleBack}
         />
       </ToBack>
+
+      { loading && <p>Carregando...</p>}
       
       <TableDebts>
-        {client ? (
+        { !loading && client ? (
           <>
             <h1>Cliente: {client.name.toUpperCase()}</h1>
 
@@ -226,7 +233,7 @@ export function ClientDebts() {
 
                     </>
                   ) : (
-                    <Message>Este cliente não possui debtos!</Message>
+                   !loading && <Message>Este cliente não possui debtos!</Message>
                   )
                 }
 
@@ -242,7 +249,7 @@ export function ClientDebts() {
                 </BoxOrganizer>
           </>
         ) : (
-          <Message>Cliente não encontrado</Message>  // Mensagem se o cliente não for encontrado
+          !loading && <Message>Cliente não encontrado</Message>  // Mensagem se o cliente não for encontrado
         )}
       </TableDebts>
     </Container>
