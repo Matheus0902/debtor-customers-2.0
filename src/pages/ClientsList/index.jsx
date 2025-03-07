@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Container, ClientsSearch, ToBack, ClientShow, LinkButton } from "./styles"
+import { Container, ClientsSearch, ToBack, ClientShow, LinkButton, MessageError} from "./styles"
 import { Header } from "../../components/Header"
 import { ButtonText } from "../../components/ButtonText"
 import { Input } from "../../components/Input"
@@ -71,7 +71,7 @@ export function ClientsList() {
         placeholder="Buscar clientes"
         onChange={(e) => setSearch(e.target.value)}
       />
-      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+      {error && <MessageError>{error}</MessageError>}
       <ul>
         {
           clients.map( client => (

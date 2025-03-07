@@ -159,7 +159,7 @@ export function ClientDebts() {
         />
       </ToBack>
 
-      { loading && <p>Carregando...</p>}
+      { loading && <Message>Carregando...</Message>}
       
       <TableDebts>
         { !loading && client ? (

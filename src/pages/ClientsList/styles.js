@@ -83,4 +83,8 @@ export const LinkButton = styled(Link)`
 
 `
 
-
+export const MessageError = styled.p`
+  margin-top: 15rem;
+  font-size: 3rem;
+  color: ${({ theme }) => theme.COLORS.RED};
+`
