@@ -16,7 +16,6 @@ export function NewClient() {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [contact, setContact] = useState('')
   const [phone, setPhone] = useState('')
 
   const navigate = useNavigate()

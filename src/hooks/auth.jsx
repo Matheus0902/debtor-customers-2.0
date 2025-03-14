@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-
+import PropTypes from 'prop-types'; 
 import { api } from '../services/api'
 
 export const AuthContext = createContext({})
@@ -63,6 +63,11 @@ function AuthProvider({ children }) {
     </AuthContext.Provider>
   )
 }
+
+// Definindo a validação de prop para o AuthProvider
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,  // Garantindo que 'children' seja passado e seja válido
+};
 
 function useAuth() {
   const context = useContext(AuthContext)
